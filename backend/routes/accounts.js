@@ -29,7 +29,7 @@ router.delete('/:id',deleteAccountByID)
 router.patch('/:id', updateAccountByID)
 
 //testing purposes
-router.delete('/',removeJobListingByID)
-router.patch('/', addJobListingByID)
+router.delete('/:id',removeJobListingByID)
+router.patch('/:id', addJobListingByID)
 
 module.exports = router

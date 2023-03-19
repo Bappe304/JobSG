@@ -102,6 +102,11 @@ const addJobListingByID = async(req,res)=>{
 }
 
 const removeJobApplicationByID = async(req,res)=>{
+    const {accountID,jobListingID} = req.body
+    if(!mongoose.Types.ObjectId.isValid(accountID) || !mongoose.Types.ObjectId.isValid(jobListingID)){
+        return res.status(400).json({error:"Account does not exist"})
+    }
+    let account = await Account.findById(accountID)
 
 }
 
