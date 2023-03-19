@@ -9,12 +9,15 @@ const {
     removeJobApplicationByID,
     removeJobListingByID} = require('../controllers/databaseController')
 
+const {signUpAccount} = require('../controllers/signUpController')
+const {loginAccount} = require('../controllers/loginVerifier')
 const router = express.Router()
 
-//get all accounts
-router.get('/', (req,res) =>{
-    res.json({msg:"get all accounts"})
-})
+//login route
+router.post('/login',loginAccount)
+
+//signup route
+router.post('/signup',signUpAccount)
 
 //get single account
 router.get('/:id', getAccountByID)
@@ -30,6 +33,7 @@ router.patch('/:id', updateAccountByID)
 
 //testing purposes
 router.delete('/:id',removeJobListingByID)
+
 router.patch('/:id', addJobListingByID)
 
 module.exports = router

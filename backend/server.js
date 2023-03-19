@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const accountsRoutes = require('./routes/accounts')
+const jobListingsRoutes = require('./routes/jobListings')
 const mongoose = require('mongoose')
 
 //setting up express app
@@ -12,7 +13,7 @@ app.use(express.json())
 //routes
 
 app.use('/api/accounts', accountsRoutes)     //essentially calling localhost:4000/api/accounts
-
+app.use('/api/jobListings', jobListingsRoutes)
 
 //connecting to db
 mongoose.connect(process.env.MONGO_URI).then(()=>{

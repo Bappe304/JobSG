@@ -1,20 +1,24 @@
+const requireAuth = require('../middleware/sessionController')
 const express = require('express')
-const {
-    addJobListingByID,
-    removeJobListingByID} = require('../controllers/databaseController')
 
-    const router = express.Router()
+const {createJobListing} = require('../controllers/jobCreationController')
+const { getJobListingByID, getAllJobListings } = require('../controllers/jobInfoController')
+const router = express.Router()
 
-    //get all the listed jobs
-    router.get('/alltheListedJobs', (req,res)=>{
-        res.json({msg:"get all the listed Jobs"})
-    })
+//returns job information for a specific job listing
+router.get('/getJobInformation/:jobListingID', getJobListingByID)
 
-
-//add a job to the database
-router.post('/', addJobListingByID)
+//returns information on all jobs
+router.get('/displayAllJobs', getAllJobListings)
 
 
-//delete a job from the database
-router.delete('/:id', removeJobListingByID)
+//to protect certain routes (login only)
+router.use(requireAuth)
+router.post('/createJobListing', createJobListing)
+//router.post('/deleteJobListing', deleteJobListing)
 
+
+
+
+
+module.exports = router

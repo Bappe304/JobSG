@@ -4,8 +4,6 @@ const { collection } = require('mongodb')
 
 const createAccount = async (req,res)=>{
     const {firstName, lastName, password, emailAddress, phoneNumber,age,gender} = req.body
-    jobListings=[12,99]
-    jobApplications = [34,17,22]
     //list of all missing values in form to return appropriate error message
     let emptyFields = []
     if(!firstName) emptyFields.push('firstName')
