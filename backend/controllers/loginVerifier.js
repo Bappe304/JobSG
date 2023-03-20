@@ -12,8 +12,8 @@ const loginAccount = async function(req,res){
         const account = await Account.login(emailAddress, password)
 
         const token = createToken(account._id)
-
-        res.status(200).json({emailAddress,token})
+        let accountID = account._id
+        res.status(200).json({emailAddress,token, accountID})
 
     } catch(error){
         res.status(400).json({error:error.message})

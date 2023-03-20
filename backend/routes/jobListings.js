@@ -11,6 +11,7 @@ router.get('/getJobInformation/:jobListingID', getJobListingByID)
 //returns information on all jobs
 router.get('/displayAllJobs', getAllJobListings)
 
+//router.get('/gfwegrw', your_function)
 
 //to protect certain routes (login only)
 router.use(requireAuth)

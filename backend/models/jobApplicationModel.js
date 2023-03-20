@@ -2,34 +2,22 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
-const jobAppSchema = new Schema({
-    firstName:{
+const jobApplicationSchema = new Schema({
+    applicantID:{
         type: String,
         required: true
     },
-    lastName: {
+    jobListingAppliedForID:{
         type: String,
         required: true
-    },
-    emailAddress: {
-        type: String,
-        required: true
-    },
-    phoneNumber: {
-        type: String,
-        required: true
-    },
-    age: {
-        type: String,
-        required: true
-    },
 
+    },
     //Working period range
-    startDate: {
+    startDateTime: {
         type: Date,
         required: true
     },
-    endDate: {
+    endDateTime: {
         type: Date,
         rewuired: true
     },
@@ -38,8 +26,7 @@ const jobAppSchema = new Schema({
         required: true
     },
     applicationStatus: {
-        type: String,
-        required: false
+        type: String
     }
 
 }, {timestamps: true})

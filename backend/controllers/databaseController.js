@@ -1,6 +1,5 @@
 const Account = require('../models/AccountModel')
 const mongoose = require('mongoose')
-const { collection } = require('mongodb')
 
 const createAccount = async (req,res)=>{
     const {firstName, lastName, password, emailAddress, phoneNumber,age,gender} = req.body

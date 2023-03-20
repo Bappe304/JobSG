@@ -37,6 +37,7 @@ const accountSchema = new Schema({
     profilePicture:{
         type: String
     }
+    //might add to array of job applications and jobs created
 
 }, {timestamps: true})
 
