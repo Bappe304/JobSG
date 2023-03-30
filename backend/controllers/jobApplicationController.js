@@ -32,10 +32,25 @@ const updatejobDetails = async(req,res)=> {
     const {jobApplicationID} = req.body
     if(!mongoose.Types.ObjectId.isValid(jobApplicationID))
     {
-        return res.status(400).json({error: "Account does not exist"})
+        return res.status(400).json({error: "Account ID is invalid"})
     }
+     
+    try{
+        const application = await AddJob.findById(jobApplicationID)
+        if(!application)
+        {
+            re.status(404).json({error: "Account not found!"})
+        }
 
-    
+        const {firstName, lastName, emailAddress, phoneNumber, age, startDate, endDate, relevantDocuments} = req.body
+        application.firstName = firstName
+        application.lastName = lastName
+        application.emailAddress = emailAddress
+        application.phoneNumber = phoneNumber
+        application.age = age
+        application.startDate = startDate
+        application.endDate = endDate
+    }
 }
 
 

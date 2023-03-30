@@ -15,11 +15,11 @@ const jobListingSchema = new Schema({
         type: String,
         required: true
     },
-    startDateTime: {
+    startDate: {
         type: Date,
         required: true
     },
-    endDateTime:{
+    endDate:{
         type: Date,
         required: true
     },
@@ -40,9 +40,14 @@ const jobListingSchema = new Schema({
     workersId:{
         type: Array,
         
+    },
+    Category: {
+        type: String,
+        required: true
     }
 
 
 }, {timestamps: true})
 
 module.exports = mongoose.model('JobListing', jobListingSchema)
+
