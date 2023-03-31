@@ -11,7 +11,7 @@ const jobCreationControl = new jobCreationController()
 const router = express.Router()
 
 //returns job information for a specific job listing
-//requires jobListing id only
+//requires jobListing id only, from URL
 router.get('/getJobInformation/:jobListingID', jobInfoControl.handleGetJobListingByID)
 
 //returns information on all jobs
