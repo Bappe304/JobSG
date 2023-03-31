@@ -1,7 +1,36 @@
 const Chat = require('../models/ChatModel')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
+const {ChatObserver}  = require('../observers/ChatObserver')
 
+
+class chatWindowController extends ChatObserver{
+    constructor(){
+        super()
+        this.update = this.update.bind(this)
+        this.handleGetChatByChatID = this.handleGetChatByChatID.bind(this)
+        
+    }
+    async update(req){
+        const chat = await Chat.getChatByChatID(req)
+        return chat
+        
+    }
+
+    async handleGetChatByChatID(req,res){
+        try{
+            const chat = await this.update(req)
+            res.status(200).json(chat)
+        } catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+
+}
+
+
+module.exports = {chatWindowController}
+/*
 //need to add logic to prevent creation of same chat between users
 const createChat = async function (req,res){
     const {workerID} = req.body
@@ -60,30 +89,7 @@ const getAllUserChats = async function(req,res){
 
 //need to add validation to ensure only relevant users can access chat
 const sendMessage = async function(req,res){
-    const {text,chatID} = req.body
-    const senderID = req.account._id
-    let emptyFields = []
-    if(!mongoose.Types.ObjectId.isValid(senderID) || !mongoose.Types.ObjectId.isValid(chatID)){
-        return res.status(400).json({error:"Chat or user does not exists"})
-    }
-    if(!senderID) emptyFields.push('senderID')
-    if(!text) emptyFields.push('text')
-    if(!chatID) emptyFields.push('chatID')
-    if(emptyFields.length > 0){
-        return res.status(400).json({error: "Please fill in all fields", emptyFields})
-    }
-    const message = {senderID: senderID, text:text, timeStamp: Date.now()}
-    try{
-        let chat = await Chat.findById(chatID)
-        if(!chat){
-            return res.status(400).json({error:"Chat does not exist"})
-        }
-        chat.messages.push(message)
-        chat = await Chat.findByIdAndUpdate({_id:chatID}, {"messages": chat.messages}, {returnOriginal:false})
-        res.status(200).json(chat)
-    } catch(error){
-        res.status(400).json({error: error.message})
-    }
+    
 
 }
 
@@ -96,3 +102,4 @@ module.exports= {
     sendMessage
 
 }
+*/

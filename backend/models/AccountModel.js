@@ -69,21 +69,31 @@ accountSchema.statics.signUp = async function(firstName, lastName, password, ema
 }
 
 accountSchema.statics.login = async function(emailAddress,password){
+
     if(!emailAddress|| !password){
         throw Error('ALl fields must be filled')
     }
-    console.log("hi")
     const user = await this.findOne({ emailAddress})
 
     if (!user){
         throw Error('Incorrect email')
     }
-    console.log(user)
     const match = await bcrypt.compare(password,user.password)
     if(!match){
         throw Error('Incorrect Password')
     }
-
+    
     return user
+}
+
+accountSchema.statics.getName = async function(id){
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        throw Error("Account does not exist")
+    }
+    const user = await this.findOne({_id:id})
+    if(!user){
+        throw Error("Account does not exists")
+    }
+    return user['firstName'] + ' ' + user['lastName']
 }
 module.exports = mongoose.model('Account', accountSchema)

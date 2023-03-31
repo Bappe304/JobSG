@@ -9,16 +9,23 @@ const {
     removeJobApplicationByID,
     removeJobListingByID} = require('../controllers/databaseController')
 
-const {signUpAccount} = require('../controllers/signUpController')
-const {loginAccount} = require('../controllers/loginVerifier')
+const {signUpController} = require('../controllers/signUpController')
+const {loginController} = require('../controllers/loginController')
 const router = express.Router()
 
-//login route
-router.post('/login',loginAccount)
+const signUpControl = new signUpController()
+const loginControl = new loginController()
 
-//signup route
-router.post('/signup',signUpAccount)
 
+//login route - needs email address and password and will 
+//returns a session cookie (so that user remains logged in)
+router.post('/login',loginControl.handleLogin)
+
+//signup route - needs all firstName, lastName, password, emailAddress, phoneNumber,age,gender 
+//returns newly created Account with session cookie
+router.post('/signup',signUpControl.handleSignUp)
+
+/*
 //get single account
 router.get('/:id', getAccountByID)
 
@@ -35,5 +42,6 @@ router.patch('/:id', updateAccountByID)
 router.delete('/:id',removeJobListingByID)
 
 router.patch('/:id', addJobListingByID)
+*/
 
 module.exports = router

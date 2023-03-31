@@ -1,27 +1,44 @@
 const mongoose = require('mongoose')
 const JobListing = require('../models/JobListingModel')
-const jwt = require('jsonwebtoken')
+const Account = require('../models/AccountModel')
+const {JobListingObserver} = require('../observers/JobListingObserver')
+const {getJobLocation} = require('../controllers/apiController')
 
 //get specific job listing
-const getJobListingByID = async function (req,res){
-    const {jobListingID} = req.params
-    if(!mongoose.Types.ObjectId.isValid(jobListingID)){
-        return res.status(400).json({error:"Job listing does not exist"})
+class jobInfoController extends JobListingObserver{
+    constructor(){
+        super()
+        this.update = this.update.bind(this)
+        this.handleGetJobListingByID = this.handleGetJobListingByID.bind(this)
     }
-    let jobListing = await JobListing.findById(jobListingID)
-    if(!jobListing){
-        return res.status(400).json({error:"Job Listing does not exist"})
+    async update(req){
+        const jobListing = await JobListing.getJobListingByID(req)
+        let updatedJobListing = JSON.parse(JSON.stringify(jobListing))
+        let creatorID = updatedJobListing["creatorId"]
+        //fetch name from creator
+        updatedJobListing["creatorName"] = await Account.getName(creatorID)
+        return updatedJobListing
     }
-    res.status(200).json(jobListing)
+    async handleGetJobListingByID (req,res){
+        try{
+            const jobListing = await this.update(req)
+            res.status(200).json(jobListing)
+        } catch(error){
+            res.status(400).json({error:error.message})
+        }
+        
+    }
+    /*
+    async handleGetAllJobListings (req,res){
+        try{
+            const jobListing = await JobListing.getAllJobListings(req)
+            res.status(200).json(jobListing)
+        } catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    */
+
 }
 
-//get all job listings
-const getAllJobListings = async function (req,res){
-    let jobListing = await JobListing.find()
-    if(!jobListing){
-        return res.status(400).json({error:"Job Listing does not exist"})
-    }
-    res.status(200).json(jobListing)
-}
-
-module.exports = {getJobListingByID, getAllJobListings}
+module.exports = {jobInfoController}
