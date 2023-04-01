@@ -39,7 +39,7 @@ const updatejobDetails = async(req,res)=> {
         const application = await AddJob.findById(jobApplicationID)
         if(!application)
         {
-            re.status(404).json({error: "Account not found!"})
+            re.status(404).json({error: "Job Application not found!"})
         }
 
         const {firstName, lastName, emailAddress, phoneNumber, age, startDate, endDate, relevantDocuments} = req.body
@@ -50,6 +50,12 @@ const updatejobDetails = async(req,res)=> {
         application.age = age
         application.startDate = startDate
         application.endDate = endDate
+
+        const updatedJob = await application.save()
+        res.status(200).json(updatedJob)
+    }catch(error) {
+        console.error(error);
+        res.status(500).json({message: 'Server Error'})
     }
 }
 
@@ -58,7 +64,7 @@ const updatejobDetails = async(req,res)=> {
 
 
 module.exports={
-    addJobtoDB
+    addJobtoDB,updatejobDetails
 }
 
 

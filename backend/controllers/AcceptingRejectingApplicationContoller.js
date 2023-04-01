@@ -16,8 +16,10 @@ const Accepting = async function(req,res) {
 const Rejejcting = async function(req,res) {
     try{
         const {jobApplicationID} = req.body
-        const application = await jobApplication.findByIdAndUpdate(jobAppllicationID,{status: "Rejected"})
+        const application = await jobApplication.findByIdAndUpdate(jobApplicationID,{status: "Rejected"})
     }catch(err){
         res.status(400).json({error: err.message})
     }
 }
+
+module.exports = (Accepting, Rejejcting)

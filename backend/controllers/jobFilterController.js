@@ -47,3 +47,4 @@ const filterbyLocation = async function(req,res) {
 }
 
 
+module.exports = (filterbyCategory, filterbyDate, filterbyLocation)
