@@ -1,17 +1,23 @@
 const express = require('express')
-const {
-    addJobtoDB} = require('../controllers/jobApplicationController')
+const requireAuth = require('../middleware/sessionController')
+const jwt = require('jsonwebtoken')
+const router = express.Router()
 
-    const router = express.Router()
+const {CreatejobApplicationController} = require('../controllers/createJobApplicationController')
+const {updateJobApplicationController} = require('../controllers/updateJobApplicationController')
 
-    //get all job applications
-    router.get('/allJobs', (req,res)=>{
-        res.json({msg:"get all Jobs"})
-    })
+const createJobApplicationControl = new CreatejobApplicationController()
+const updateJobApplicationControl = new updateJobApplicationController()
 
-    
-    //add a new job profile
-    router.post('/', addJobtoDB)
+//protected routes
+//all routes below this require session cookie (login) to access
+router.use(requireAuth)
 
 
-    module.exports = router
+//create a job application
+//require session cookie and account id
+router.post('/createJobApplication', createJobApplicationControl.handleJobApplication)
+
+//update a job application
+//require session cookie, account id and job application id
+router.post('/updateJobApplication/:id', updateJobApplicationControl.handleJobApplicationUpdate)

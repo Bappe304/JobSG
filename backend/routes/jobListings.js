@@ -5,9 +5,18 @@ const {jobCreationController} = require('../controllers/jobCreationController')
 const { jobInfoController } = require('../controllers/jobInfoController')
 const { jobsListController } = require('../controllers/jobsListController')
 const {getJobLocation} = require('../controllers/apiController')
+const {jobFilterByCategoryController} = require('../controllers/jobFilterByCategoryController')
+const {jobFilterByDatesController} = require('../controllers/jobFilterByDatesController')
+const {jobFilterByLocationController} = require('../controllers/jobFilterByLocationController')
+
+
+
 const jobInfoControl = new jobInfoController()
 const jobsListControl = new jobsListController()
 const jobCreationControl = new jobCreationController()
+const jobFilterByCategoryControl = new jobFilterByCategoryController()
+const jobFilterByDatesControl = new jobFilterByDatesController()
+const jobFilterByLocationControl = new jobFilterByLocationController()
 const router = express.Router()
 
 //returns job information for a specific job listing
@@ -26,6 +35,16 @@ router.post('/createJobListing', jobCreationControl.handleJobCreation)
 
 
 //router.post('/deleteJobListing', deleteJobListing)
+
+
+//filters the jobs by location
+router.get('/getJobLocation', jobFilterByCategoryControl.handleFilter)
+
+//filters the jobs by category
+router.get('/getJobCategory', jobFilterByDatesControl.handleFilter)
+
+//filters the jobs by date
+router.get('/getJobDate', jobFilterByLocationControl.handleFilter)
 
 
 module.exports = router
