@@ -26,6 +26,16 @@ router.get('/getJobInformation/:jobListingID', jobInfoControl.handleGetJobListin
 //returns information on all jobs
 router.get('/displayAllJobs', jobsListControl.handleGetAllJobListings)
 
+//filters the jobs by location
+router.get('/getJobLocation', jobFilterByCategoryControl.handleFilter)
+
+//filters the jobs by category
+router.get('/getJobCategory', jobFilterByDatesControl.handleFilter)
+
+//filters the jobs by date
+router.get('/getJobDate', jobFilterByLocationControl.handleFilter)
+
+
 //to protect certain routes (login only)
 router.use(requireAuth)
 
@@ -37,14 +47,6 @@ router.post('/createJobListing', jobCreationControl.handleJobCreation)
 //router.post('/deleteJobListing', deleteJobListing)
 
 
-//filters the jobs by location
-router.get('/getJobLocation', jobFilterByCategoryControl.handleFilter)
-
-//filters the jobs by category
-router.get('/getJobCategory', jobFilterByDatesControl.handleFilter)
-
-//filters the jobs by date
-router.get('/getJobDate', jobFilterByLocationControl.handleFilter)
 
 
 module.exports = router

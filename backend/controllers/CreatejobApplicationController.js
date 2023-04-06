@@ -1,8 +1,8 @@
 const AddJob = require('../models/jobApplicationModel')
 const mongoose = require('mongoose')
-const {jobApplicationObserver} = require('../observers/jobApplicationObserver')
+const {JobApplicationObserver} = require('../observers/jobApplicationObserver')
 
-class CreatejobApplicationController extends jobApplicationObserver{
+class CreatejobApplicationController extends JobApplicationObserver{
     constructor(){
         super()
         this.update = this.update.bind(this)

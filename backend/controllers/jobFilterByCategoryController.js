@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 const JobListing = require('../models/JobListingModel')
 const jwt = require('jsonwebtoken')
-const {jobListingObserver} = require('../observers/JobListingObserver')
+const {JobListingObserver} = require('../observers/JobListingObserver')
 
-class filterbyCategoryController extends jobListingObserver{
+class jobFilterByCategoryController extends JobListingObserver{
     constructor(){
         super()
         this.update = this.update.bind(this)
@@ -24,4 +24,4 @@ class filterbyCategoryController extends jobListingObserver{
     }
 }
 
-module.exports = {filterbyCategoryController}
+module.exports = {jobFilterByCategoryController}

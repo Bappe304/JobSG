@@ -75,9 +75,11 @@ jobListingSchema.statics.createJob = async function(req){
     if(!postalCode) emptyFields.push('postalCode')
     if(!reqNumberOfWorkers) emptyFields.push('reqNumberOfWorkers')
     if(!creatorId) emptyFields.push('creatorId')
-    if(!creatorId) emptyFields.push('address')
-    if(!creatorId) emptyFields.push('lat')
-    if(!creatorId) emptyFields.push('lng')
+    if(!address) emptyFields.push('address')
+    if(!lat) emptyFields.push('lat')
+    if(!lng) emptyFields.push('lng')
+    if(!category) emptyFields.push('category')
+
     if(emptyFields.length > 0){
         throw Error("Please fill in all fields", emptyFields)
     }

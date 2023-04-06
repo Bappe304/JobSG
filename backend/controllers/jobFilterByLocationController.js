@@ -1,9 +1,9 @@
 const JobListing = require('../models/JobListingModel')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
-const {jobListingObserver} = require('../observers/JobListingObserver')
+const {JobListingObserver} = require('../observers/JobListingObserver')
 
-class filterbyLocationController extends jobListingObserver{
+class jobFilterByLocationController extends JobListingObserver{
     constructor(){
         super()
         this.update = this.update.bind(this)
@@ -24,4 +24,4 @@ class filterbyLocationController extends jobListingObserver{
     }
 }
 
-module.exports = {filterbyLocationController}
+module.exports = {jobFilterByLocationController}
