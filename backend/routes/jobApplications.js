@@ -3,12 +3,12 @@ const requireAuth = require('../middleware/sessionController')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 
-const {CreatejobApplicationController} = require('../controllers/createJobApplicationController')
+const {CreateJobApplicationController} = require('../controllers/CreateJobApplicationController')
 const {updateJobApplicationController} = require('../controllers/updateJobApplicationController')
 const {getAllJobApplicationsController} = require('../controllers/getAllJobApplicationsController')
 
 
-const createJobApplicationControl = new CreatejobApplicationController()
+const createJobApplicationControl = new CreateJobApplicationController()
 const updateJobApplicationControl = new updateJobApplicationController()
 const getAllJobApplicationsControl = new getAllJobApplicationsController()
 

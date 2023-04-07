@@ -6,8 +6,11 @@ const chatsRoutes = require('./routes/chats')
 const applicationRoutes = require('./routes/jobApplications')
 const mongoose = require('mongoose')
 
+
 //setting up express app
 const app = express()
+let cors = require("cors");
+app.use(cors());
 
 //middleware -> to get access to req body
 app.use(express.json())
