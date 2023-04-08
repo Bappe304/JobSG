@@ -1,0 +1,115 @@
+.chat-main { 
+    width: 70%; 
+    float: left; 
+    height: 100vh; 
+    overflow-y: auto; 
+  } 
+   
+.chat-window-page { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: flex-start; 
+    justify-content: space-between; 
+    background-color: lightgray; 
+    /* height: 100vh */ 
+    height: 100%; 
+    width: 100%; 
+} 
+   
+/* make chat window take up the available space in .chat-main and fill the scrollable area */ 
+.chat-window { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    overflow-y: auto; 
+    border: 1px solid #a1a1a1; 
+    border-radius: 4px; 
+    margin-top: 10px; 
+} 
+   
+/* make background around each message wrap nicely */ 
+.message-wrapper { 
+    background-color: #f1f0f0; 
+    padding: 10px; 
+    border-radius: 5px; 
+    display: inline-block; 
+    max-width: 80%; 
+} 
+   
+.chat-message { 
+    display: block; 
+    margin-bottom: 10px; 
+    max-width: 70%; 
+    padding: 10px; 
+    border-radius: 8px; 
+    font-size: 16px; 
+}  
+   
+.chat-message.sent { 
+    margin: 10px; 
+    margin-left: 30%; 
+} 
+   
+.chat-message.received { 
+    border-radius: 5px; 
+    margin: 10px; 
+    margin-right: 30%; 
+} 
+ 
+.chatInput { 
+    flex-grow: 1; 
+    padding: 5px; 
+    border: none; 
+    border-radius: 4px; 
+    font-size: 16px; 
+    overflow-y: auto; 
+    align-self: center; 
+    /* position: fixed; 
+    bottom: 0; */ 
+} 
+ 
+button { 
+    background-color: #007bff; 
+    border: none; 
+    color: #fff; 
+    padding: 0.5rem; 
+    border-radius: 0.25rem; 
+    cursor: pointer; 
+    margin-right: 0.5rem; 
+} 
+   
+.chat-sidebar { 
+    display: flex; 
+    flex-direction: column; 
+    width: 30%; 
+    height: 100vh; 
+    background-color: #f7f7f7; 
+    border-right: 1px solid #e1e1e1; 
+    align-self: flex-start; 
+    padding: 10px; 
+    border-bottom: 1px solid #e1e1e1; 
+    cursor: pointer; 
+} 
+   
+.chat-sidebar__header { 
+    height: 60px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background-color: #fff; 
+    border-bottom: 1px solid #e1e1e1; 
+} 
+   
+.chat-sidebar__header h1 { 
+    font-size: 1.5rem; 
+    font-weight: 600; 
+} 
+   
+.chat-sidebar__list { 
+    flex: 1; 
+    overflow-y: auto; 
+} 
+   
+.chat-sidebar:hover { 
+    background-color: #e6e6e6; 
+}

@@ -64,7 +64,7 @@ const jobListingSchema = new Schema({
 
 
 jobListingSchema.statics.createJob = async function(req){
-    const {jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers, category,address,lat,lng} = req.body
+    const {jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers, category, address,lat,lng} = req.body
     const creatorId = req.account._id
     let emptyFields = []
     if(!jobTitle) emptyFields.push('jobTitle')
@@ -79,9 +79,8 @@ jobListingSchema.statics.createJob = async function(req){
     if(!lat) emptyFields.push('lat')
     if(!lng) emptyFields.push('lng')
     if(!category) emptyFields.push('category')
-
     if(emptyFields.length > 0){
-        throw Error("Please fill in all fields", emptyFields)
+        throw Error("Please fill in all fields test" + emptyFields)
     }
     const jobListing = await this.create({jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers, creatorId, workersId:[], category,address,lat,lng})
     return jobListing

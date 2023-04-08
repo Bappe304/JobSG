@@ -40,7 +40,7 @@ router.get('/getJobDate', jobFilterByLocationControl.handleFilter)
 router.use(requireAuth)
 
 //creates a job listing
-//creates session cookie, jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers
+//creates jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers
 router.post('/createJobListing', jobCreationControl.handleJobCreation)
 
 
