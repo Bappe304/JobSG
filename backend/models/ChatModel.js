@@ -99,6 +99,7 @@ chatSchema.statics.getAllUserChats = async function(req){
         chatsAsCreator = Object.values(chatsAsCreator)
         chatsAsWorker = Object.values(chatsAsWorker)
         const chats = chatsAsCreator.concat(chatsAsWorker)
+        
         return chats
     } catch(error){
         throw Error(error.message)

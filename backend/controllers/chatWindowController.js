@@ -2,6 +2,7 @@ const Chat = require('../models/ChatModel')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const {ChatObserver}  = require('../observers/ChatObserver')
+const Account = require('../models/AccountModel')
 
 
 class chatWindowController extends ChatObserver{
@@ -20,7 +21,18 @@ class chatWindowController extends ChatObserver{
     async handleGetChatByChatID(req,res){
         try{
             const chat = await this.update(req)
-            res.status(200).json(chat)
+            const id = req.account._id
+            let updatedChat = JSON.parse(JSON.stringify(chat))
+            if (updatedChat["workerID"] != id){
+                updatedChat["name"] = await Account.getName(updatedChat["workerID"])
+                
+            }
+            else{
+                updatedChat["name"] = await Account.getName(updatedChat["jobCreatorID"])
+
+            }
+
+            res.status(200).json(updatedChat)
         } catch(error){
             res.status(400).json({error:error.message})
         }
