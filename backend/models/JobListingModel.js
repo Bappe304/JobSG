@@ -82,6 +82,24 @@ jobListingSchema.statics.createJob = async function(req){
     if(emptyFields.length > 0){
         throw Error("Please fill in all fields test" + emptyFields)
     }
+    if(jobTitle.length < 2 || jobTitle.length > 50){
+        throw Error("Job Title length should be between 2 and 50 characters")
+    }
+    if(jobDescription.length < 20 || jobTitle.length > 300){
+        throw Error("Job Description length should be between 20 and 300 characters")
+    }
+    let startDate = new Date(startDateTime)
+    let endDate = new Date(endDateTime)
+    
+    let currentDate = new Date()
+    currentDate.setMinutes(currentDate.getMinutes() + 30)
+    if (startDate.valueOf() <= currentDate.valueOf()){
+        throw Error("Job Starting Date And Time Must Be 30 Minutes Past Current Time")
+    }
+    endDate.setHours(endDate.getHours() - 1)
+    if (startDate.valueOf() > endDate.valueOf() ){
+        throw Error("Job Ending Date And Time Must At Least Be 1 Hour Past Job Starting Date And Time")
+    }
     const jobListing = await this.create({jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers, creatorId, workersId:[], category,address,lat,lng})
     return jobListing
 }

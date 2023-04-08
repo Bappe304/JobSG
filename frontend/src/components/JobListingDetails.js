@@ -21,7 +21,7 @@ const JobListingDetails = () => {
                     <br></br>
                     <label>Job Description:</label>
                     <p>{ jobListing.jobDescription }</p> 
-                    <label>Total Pay: </label>
+                    <label>Total Pay: $</label>
                     <p>{ jobListing.totalPay }</p> 
                     <label>Start Date & Time: </label>
                     <p>{ jobListing.startDateTime }</p> 

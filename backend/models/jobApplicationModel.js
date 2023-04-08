@@ -71,7 +71,7 @@ jobApplicationSchema.statics.getAllJobApplications = async function(req){
     }
 }   
 
-
+//jobApplicationSchema.statics.getAll
 
 
 

@@ -10,7 +10,7 @@ const ListJobs = ({ jobListings, title }) => {
                         <p className="jobTitle">Job Title: { jl.jobTitle }</p>
                         <label>Job Description:</label>
                         <p>{ jl.jobDescription }</p>
-                        <label>Total Pay:</label>
+                        <label>Total Pay: $</label>
                         <p>{ jl.totalPay }</p>
                         <label>Start Date & Time:</label>
                         <p>{ jl.startDateTime }</p>

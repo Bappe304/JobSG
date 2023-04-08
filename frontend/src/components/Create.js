@@ -1,27 +1,30 @@
 import { useState } from "react";  
-import { Form } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom"; 
+ 
   
 const Create = () => {  
   
     // States created for each job listing  
     const [jobTitle, setJobTitle] = useState('');  
     const [jobDescription, setJobDescription] = useState('');  
-    const [totalPay, setTotalPay] = useState('');  
+    const [totalPay, setTotalPay] = useState();  
     const [startDateTime, setStartDateTime] = useState(new Date());  
     const [endDateTime, setEndDateTime] = useState(new Date());  
     const [postalCode, setPostalCode] = useState('');  
-    const [reqNumberOfWorkers, setReqNumberOfWorkers] = useState(0);  
-    const [numApplicants, setNumApplicants] = useState(0);  
-    const [creatorName, setCreatorName] = useState('');  
-    const [workerNames, setWorkerNames] = useState([]);  
+    const [reqNumberOfWorkers, setReqNumberOfWorkers] = useState();    
     const [isPending, setIsPending] = useState(false); 
- 
+    const [error, setError] = useState(null)
+    const [category, setCategory] = useState('others')
+    const navigate = useNavigate();
+    const onOptionChangeHandler = (event) => {  
+        setCategory(event.target.value)  
+    }
  
     const handleSubmit = (e) => { 
         e.preventDefault(); 
         const creatorId = "6426a67cd214cdc2da12fd7f";
-        const category = "education"
-        const job = { jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode,category, reqNumberOfWorkers,creatorId}; 
+        let isError = false
+        const job = { jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers,category,creatorId}; 
         setIsPending(true); 
         const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDI2YTY3Y2QyMTRjZGMyZGExMmZkN2YiLCJpYXQiOjE2ODA5MzAyMzgsImV4cCI6MTY4MTE4OTQzOH0.fL-btj20bI7XsYK0jqVmzbpj_mNzuaQEdJbqinXjlFQ";
         fetch('http://localhost:4000/api/jobListings/createJobListing',{ 
@@ -29,14 +32,25 @@ const Create = () => {
             headers: {"Content-Type": "application/json"
         ,"Authorization": `Bearer ${token}`}, 
             body: JSON.stringify(job) 
-        }).then((res) => { 
-            console.log('New Job Listing added'); 
+        }).then(response =>{
+
+            console.log(response)
+            return response.json()
+        }
+            ) 
+        .then(data => {
+            console.log(data);
+            if(data["error"]) {
+                setIsPending(false); 
+                throw Error(data["error"])
+            }
             setIsPending(false); 
-            return res.json()
-        }).then((data)=>{
-            console.log("hi", data)
-        }).catch(err=>{
-            console.log(err.message)
+            navigate(`/joblistingdetails/${data._id}`); 
+        })   
+        .catch((error)=>{
+            console.log(error)
+            setError(error.message)
+
         })
     } 
  
@@ -59,7 +73,8 @@ const Create = () => {
                 ></textarea> 
                 <label>Total Pay:</label> 
                 <input  
-                    type="text"  
+                    type="number"  
+                    min = {1}
                     required 
                     value = {totalPay} 
                     onChange={(e) => setTotalPay(e.target.value)} 
@@ -82,8 +97,10 @@ const Create = () => {
                 /> 
                 <label>Location (Postal Code):</label> 
                 <input  
-                    type="text"  
+                    type="tel"  
                     required 
+                    width = {6}
+                    pattern = "[0-9]{6}"
                     value = {postalCode} 
                     onChange={(e) => setPostalCode(e.target.value)} 
                 /> 
@@ -95,6 +112,21 @@ const Create = () => {
                     value = {reqNumberOfWorkers} 
                     onChange={(e) => setReqNumberOfWorkers(e.target.value)} 
                 /> 
+
+                <label>Category:</label>  
+                <select name="category" value={category} onChange={onOptionChangeHandler} required>  
+                    <option selected disabled>--Please choose an option below--</option> 
+                    <option value="Others">Others</option> 
+                    <option value="Hospitality, F&B">Hospitality, F&B</option> 
+                    <option value="Customer Service">Customer Service</option> 
+                    <option value="Cleaning">Cleaning</option> 
+                    <option value="Transport & Delivery">Transport & Delivery</option> 
+                    <option value="Admin & Finance">Admin & Finance</option> 
+                    <option value="Warehouse & Logistics">Warehouse & Logistics</option> 
+                    <option value="Education & Training">Education & Training</option> 
+                    <option value="Nursing & Healthcare">Nursing & Healthcare</option> 
+                    <option value="Sales, Retail & Marketing">Sales, Retail & Marketing</option> 
+                </select>
                 <br></br> 
                 <br></br> 
                 <button className ="UploadJob"> 
@@ -106,6 +138,7 @@ const Create = () => {
                 { !isPending && <button className="AddJob">Add Job</button> } 
                 { isPending && <button className="AddJob" disabled>Add Job Listing...</button> } 
             </form> 
+            {error && <h2>{error}</h2>}
         </div> 
     );  
 }  

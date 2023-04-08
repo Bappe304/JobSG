@@ -1,4 +1,4 @@
-
+import './acceptRejectAppForm.css'
 import './index.css'; 
 import NavBar from './components/NavBar'; 
 import { BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom"; 
@@ -12,6 +12,7 @@ import Signup from './pages/Signup'
 import { useAuthContext } from './hooks/useAuthContext';
 import Footer from './components/Footer'
 import ProfilePage from './pages/ProfilePage'
+import AcceptRejectAppForm from './pages/AcceptRejectAppForm';
  
 
 function App() { 
@@ -31,6 +32,7 @@ function App() {
             <Route path='/JobApplicationForm/:_id' element={user ? <JobApplicationForm /> : <Navigate to="/login" />}/>
             <Route path='/ChatWindow' element={user ? <ChatWindow/>: <Navigate to="/login" />} />
             <Route path='/profilePage/:_id' element={user ? <ProfilePage/> : <Navigate to="/login" />} />
+            <Route path='/AcceptRejectAppForm' element={<AcceptRejectAppForm/>} />
           </Routes> 
         </div> 
         <Footer/>

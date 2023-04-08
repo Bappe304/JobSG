@@ -12,20 +12,13 @@ class signUpController extends AccountObserver{
         this.handleSignUp = this.handleSignUp.bind(this)
     }
     async update(req){
-        const {firstName, lastName, password, emailAddress, phoneNumber,age,gender} = req.body
-        let emptyFields = []
-        if(!firstName) emptyFields.push('firstName')
-        if(!lastName) emptyFields.push('lastName')
-        if(!password) emptyFields.push('password')
-        if(!emailAddress) emptyFields.push('emailAddress')
-        if(!phoneNumber) emptyFields.push('phoneNumber')
-        if(!age) emptyFields.push('age')
-        if(!gender) emptyFields.push('gender')
-        if(emptyFields.length > 0){
-            return res.status(400).json({error: "Please fill in all fields", emptyFields})
+        try{
+            const account = await Account.signUp(req)
+            return account
+        } catch(error){
+            throw error;
         }
-        const account = await Account.signUp(firstName, lastName, password, emailAddress, phoneNumber,age,gender)
-        return account
+        
     }
 
     //signup user
