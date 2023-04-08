@@ -1,21 +1,15 @@
 const express = require('express')
-const {
-    createAccount, 
-    getAccountByID, 
-    deleteAccountByID, 
-    updateAccountByID,
-    addJobApplicationByID,
-    addJobListingByID,
-    removeJobApplicationByID,
-    removeJobListingByID} = require('../controllers/databaseController')
+
 
 const {signUpController} = require('../controllers/signUpController')
 const {loginController} = require('../controllers/loginController')
+const {getAccountController} = require('../controllers/getAccountController')
+
 const router = express.Router()
 
 const signUpControl = new signUpController()
 const loginControl = new loginController()
-
+const getAccountControl = new getAccountController()
 
 //login route - needs email address and password and will 
 //returns a session cookie (so that user remains logged in)
@@ -25,7 +19,7 @@ router.post('/login',loginControl.handleLogin)
 //returns newly created Account with session cookie
 router.post('/signup',signUpControl.handleSignUp)
 
-router.get('/:id', getAccountByID)
+router.get('/:accountID', getAccountControl.handleGetAccount)
 
 /*
 //get single account

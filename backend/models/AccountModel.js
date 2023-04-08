@@ -96,4 +96,16 @@ accountSchema.statics.getName = async function(id){
     }
     return user['firstName'] + ' ' + user['lastName']
 }
+
+accountSchema.statics.getAccount = async function(req){
+    const {accountID} = req.params
+    if(!mongoose.Types.ObjectId.isValid(accountID)){
+        throw Error("Accountdoes not exist")
+    }
+    let account = await this.findById(accountID)
+    if(!account){
+        throw Error("Account does not exist")
+    }
+    return account
+}
 module.exports = mongoose.model('Account', accountSchema)
