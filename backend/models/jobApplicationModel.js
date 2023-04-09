@@ -34,7 +34,6 @@ const jobApplicationSchema = new Schema({
 //module.exports = mongoose.model('JobApplication', jobApplicationSchema)
 
 jobApplicationSchema.statics.createJobApplication = async function(req){
-    console.log(req.body)
     const {jobListingAppliedForID, startDateTime, endDateTime} = req.body
     const applicantID = req.account._id
     let emptyFields = []
@@ -47,6 +46,8 @@ jobApplicationSchema.statics.createJobApplication = async function(req){
         throw Error("Please fill in all fields" + emptyFields)
     }
     try{
+        const existingApplication = await this.find({applicantID})
+        console.log(applicantID)
         const jobApplication = await this.create({applicantID, jobListingAppliedForID, startDateTime, endDateTime, applicationStatus:"Pending"})
         return jobApplication
     }catch (error){
@@ -70,6 +71,40 @@ jobApplicationSchema.statics.getAllJobApplications = async function(req){
         throw Error(error.message)
     }
 }   
+
+jobApplicationSchema.statics.getAllJobsAppliedFor = async function(req){
+    const {applicantID} = req.body
+    if(!mongoose.Types.ObjectId.isValid(applicantID)){
+        throw Error("Account does not exist")
+    }
+    try{
+        let jobApplications = await this.find({applicantID})
+        if(!jobApplications){
+            return {}
+        }
+        
+        console.log(jobApplications)
+        return jobApplications
+    }catch(error){
+        throw Error(error.message)
+    }
+}
+
+    jobApplicationSchema.statics.getAllApplicationsForJob = async function(jobListingAppliedForID){
+        if(!mongoose.Types.ObjectId.isValid(jobListingAppliedForID)){
+            throw Error("Account does not exist")
+        }
+        try{
+            const jobApplications = await this.find({jobListingAppliedForID})
+            if (!jobApplications){
+                jobApplications = {}
+            }
+            return jobApplications
+        } catch (error){
+            throw Error(error.message)
+        }
+        
+    }
 
 //jobApplicationSchema.statics.getAll
 
@@ -99,9 +134,9 @@ jobApplicationSchema.statics.updatejobDetails = async function(req){
         res.status(200).json(updatedJob)
 
     }catch(error){
-
         throw Error({message: 'Server Error'})
     }
 }
 
 module.exports = mongoose.model('JobApplication', jobApplicationSchema)
+

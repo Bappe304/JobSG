@@ -1,6 +1,6 @@
 import { useState } from "react";  
 import { useNavigate } from "react-router-dom"; 
- 
+import { useAuthContext } from "../hooks/useAuthContext";
   
 const Create = () => {  
   
@@ -16,21 +16,20 @@ const Create = () => {
     const [error, setError] = useState(null)
     const [category, setCategory] = useState('others')
     const navigate = useNavigate();
+    const { user } = useAuthContext();
     const onOptionChangeHandler = (event) => {  
         setCategory(event.target.value)  
     }
  
     const handleSubmit = (e) => { 
         e.preventDefault(); 
-        const creatorId = "6426a67cd214cdc2da12fd7f";
         let isError = false
-        const job = { jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers,category,creatorId}; 
+        const job = { jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers,category, creatorId: user.accountID}; 
         setIsPending(true); 
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDI2YTY3Y2QyMTRjZGMyZGExMmZkN2YiLCJpYXQiOjE2ODA5MzAyMzgsImV4cCI6MTY4MTE4OTQzOH0.fL-btj20bI7XsYK0jqVmzbpj_mNzuaQEdJbqinXjlFQ";
         fetch('http://localhost:4000/api/jobListings/createJobListing',{ 
             method: 'POST', 
             headers: {"Content-Type": "application/json"
-        ,"Authorization": `Bearer ${token}`}, 
+        ,"Authorization": `Bearer ${user.token}`}, 
             body: JSON.stringify(job) 
         }).then(response =>{
 

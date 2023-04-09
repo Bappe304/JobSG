@@ -19,7 +19,7 @@ router.post('/login',loginControl.handleLogin)
 //returns newly created Account with session cookie
 router.post('/signup',signUpControl.handleSignUp)
 
-router.get('/:accountID', getAccountControl.handleGetAccount)
+router.post('/:accountID', getAccountControl.handleGetAccount)
 
 /*
 //get single account

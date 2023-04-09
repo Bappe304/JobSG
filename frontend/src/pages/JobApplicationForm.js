@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"  
+import { useNavigate, useParams } from "react-router-dom"  
 import React, { useState } from 'react';  
 import DatePicker from 'react-date-picker'; 
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -11,14 +11,14 @@ const JobApplicationForm = () => {
     const [resumeUploaded, setResumeUploaded] = useState(false); // add a state to track if the user has uploaded their resume  
     const [noResumeError, setNoResumeError] = useState(null); // add a state for error messages  
     const [endDateError, setEndDateError] = useState(null); // add a state for end date error messages 
-    const { user } = useAuthContext()
+    const { user } = useAuthContext();
+    const { _id } = useParams();
+    const navigate = useNavigate();  
 
  
     const today = new Date(); // get today's date  
     const tomorrow = new Date(); // create a new date object for tomorrow  
     tomorrow.setDate(today.getDate() + 1); // set the date to tomorrow's date 
-    console.log(today) 
-    console.log(tomorrow) 
   
     // handle submit function  
     const handleSubmit = async (e) => {  
@@ -55,30 +55,25 @@ const JobApplicationForm = () => {
             return;  
         }  
         */
-  
-        // handle form submission logic here  
-        const application = {startDate, endDate, loading};  
-        //see on console  
-        console.log(application);  
+ 
         
         // const formData = {startDate, endDate, resumeFile};  
-        const formData = {startDate, endDate, accountID: user.accountID}; 
-        console.log(formData)
+        const formData = {startDateTime: startDate, endDateTime: endDate, accountID: user.accountID, jobListingAppliedForID: _id}; 
   
         try {  
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDI2YTY3Y2QyMTRjZGMyZGExMmZkN2YiLCJpYXQiOjE2ODA5MzAyMzgsImV4cCI6MTY4MTE4OTQzOH0.fL-btj20bI7XsYK0jqVmzbpj_mNzuaQEdJbqinXjlFQ";
-            const response = await fetch('http://localhost:4000/api/application/createJobApplication/' , {  
+            // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDI2YTY3Y2QyMTRjZGMyZGExMmZkN2YiLCJpYXQiOjE2ODA5MzAyMzgsImV4cCI6MTY4MTE4OTQzOH0.fL-btj20bI7XsYK0jqVmzbpj_mNzuaQEdJbqinXjlFQ";
+            const response = await fetch('http://localhost:4000/api/application/createJobApplication', {  
                 method: 'POST',
-                headers: {"Content-Type": "application/json"
-        ,"Authorization": `Bearer ${token}`},   
-                body: formData  
-            }).then(res=> {console.log(res); return res.json()}) 
-            .then(data=>console.log(data)) 
-            .catch(err=> console.log(err.message)) 
+                headers: {"Content-Type": "application/json",
+                          "Authorization": `Bearer ${user.token}`
+                        },   
+                body: JSON.stringify(formData) 
+            }) 
   
-            const data = await response.json();  
-  
-            setLoading(false);  
+            const data = await response.json();
+            setLoading(false);
+            
+            navigate(`/joblistingdetails/${_id}`)
   
             //navigate('/success'); // redirect to success page on successful submission  
         } catch (error) {  
@@ -88,7 +83,8 @@ const JobApplicationForm = () => {
   
         setLoading(false); // set loading state to false  
         setNoResumeError(null); // reset resume error message state  
-        setEndDateError(null); // reset end date error message state  
+        setEndDateError(null); // reset end date error message state
+        
     }  
   
     return (   
@@ -131,7 +127,7 @@ const JobApplicationForm = () => {
         <br></br> 
         <br></br> */} 
  
-        <button onClick={handleSubmit} className="submitButton">Submit</button> 
+        <button onClick={handleSubmit} disabled={loading} className="submitButton">Submit</button> 
         </div>  
  
     );  

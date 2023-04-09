@@ -125,6 +125,18 @@ jobListingSchema.statics.getAllJobListings = async function (req){
     return jobListings
 }
 
+jobListingSchema.statics.getAllJobListingsByCreatorID = async function(creatorId){
+    console.log(creatorId)
+    if(!mongoose.Types.ObjectId.isValid(creatorId)){
+        throw Error("Job listing does not exist")
+    }
+    let allJobListings = await this.find({creatorId:creatorId})
+    if (!allJobListings){
+        throw Error("User has not created any job listings!")
+    }
+    console.log(allJobListings)
+    return allJobListings;
+}
 
 
 jobListingSchema.statics.filterbyDate = async function (req){

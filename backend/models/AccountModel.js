@@ -55,7 +55,7 @@ accountSchema.statics.signUp = async function(req){
         if(!age) emptyFields.push('age')
         if(!gender) emptyFields.push('gender')
         if(emptyFields.length > 0){
-            throw Error("Please fill in all fields" + emptyFields)
+            throw Error("Please fill in all fields " + emptyFields)
         }
         if (firstName.length < 2 || firstName.length > 80){
             throw Error("First Name must be between 2 and 80 characters!")
@@ -118,7 +118,7 @@ accountSchema.statics.login = async function(emailAddress,password){
     }
     const match = await bcrypt.compare(password,user.password)
     if(!match){
-        throw Error('Invalid email address or passwordd')
+        throw Error('Invalid email address or password')
     }
     
     return user
@@ -130,7 +130,7 @@ accountSchema.statics.getName = async function(id){
     }
     const user = await this.findOne({_id:id})
     if(!user){
-        throw Error("Account does not exists")
+        throw Error("Account does not exist")
     }
     return user['firstName'] + ' ' + user['lastName']
 }
@@ -138,7 +138,7 @@ accountSchema.statics.getName = async function(id){
 accountSchema.statics.getAccount = async function(req){
     const {accountID} = req.params
     if(!mongoose.Types.ObjectId.isValid(accountID)){
-        throw Error("Accountdoes not exist")
+        throw Error("Account does not exist")
     }
     let account = await this.findById(accountID)
     if(!account){

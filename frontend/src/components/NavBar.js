@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom" 
 import { useLogout } from "../hooks/useLogout"; 
 import { useAuthContext } from "../hooks/useAuthContext"; 
- 
+
 const NavBar = () => { 
     const { logout } = useLogout() 
     const { user } = useAuthContext() 
@@ -22,10 +22,12 @@ const NavBar = () => {
             {/* Navbar when user is logged in */} 
             {user && ( 
                 <div className="logged-in-links"> 
-                    <Link to={`/profilePage/${user.accountID}`}><p>Welcome, {user.emailAddress}</p></Link> 
-                    <Link to="/">Your Chats</Link> 
+                    <Link to={`/profilePage/${user.accountID}`}>
+                        <p className="profile-page-link">Welcome, {user.emailAddress}</p>
+                    </Link> 
+                    <Link to="/PendingApplications">Pending Applicants</Link> 
                     <Link to="/create">Create Job</Link> 
-                    <button onClick={handleClick}>Logout</button> 
+                    <button onClick={handleClick} className="logout-button">Logout</button> 
                 </div> 
             )} 
             {/* Navbar when user is NOT logged in */} 

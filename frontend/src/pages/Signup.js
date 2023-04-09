@@ -10,7 +10,7 @@ const Signup = () => {
     const [phoneNumber, setPhoneNumber] = useState(''); 
     const [password, setPassword] = useState(''); 
     const [age, setAge] = useState(0); 
-    const [gender, setGender] = useState(''); 
+    const [gender, setGender] = useState('Male');
     // const [profilePic, setProfilePic] = useState(new Image()) 
     const {signup, error, isLoading} = useSignup() 
  
