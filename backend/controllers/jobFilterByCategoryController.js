@@ -10,7 +10,7 @@ class jobFilterByCategoryController extends JobListingObserver{
         this.handleFilter = this.handleFilter.bind(this)
     }
     async update(req){
-        const job = await JobListing.filterByCategory(req)
+        const job = await JobListing.filterbyCategory(req)
         return job
     }
 

@@ -172,9 +172,9 @@ jobListingSchema.statics.filterbyLocation = async function (req){
 
 jobListingSchema.statics.filterbyCategory = async function (req){
     try{
-        const {category} = req.query
-        const jobs = await JobListing.find({Category: category})
-        res.status(200).json(jobs)
+        const {category} = req.params
+        const jobs = await this.find({category})
+        return jobs
         }catch (err){
             res.status(500).json({ error: err.message})
         }

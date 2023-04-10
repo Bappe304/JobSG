@@ -27,13 +27,13 @@ router.get('/getJobInformation/:jobListingID', jobInfoControl.handleGetJobListin
 router.get('/displayAllJobs', jobsListControl.handleGetAllJobListings)
 
 //filters the jobs by location
-router.get('/getJobLocation', jobFilterByCategoryControl.handleFilter)
+router.get('/getJobLocation', jobFilterByLocationControl.handleFilter)
 
 //filters the jobs by category
-router.get('/getJobCategory', jobFilterByDatesControl.handleFilter)
+router.get('/getJobCategory/:category', jobFilterByCategoryControl.handleFilter)
 
 //filters the jobs by date
-router.get('/getJobDate', jobFilterByLocationControl.handleFilter)
+router.get('/getJobDate', jobFilterByDatesControl.handleFilter)
 
 
 //to protect certain routes (login only)
