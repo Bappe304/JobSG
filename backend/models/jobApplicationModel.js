@@ -82,29 +82,27 @@ jobApplicationSchema.statics.getAllJobsAppliedFor = async function(req){
         if(!jobApplications){
             return {}
         }
-        
-        console.log(jobApplications)
         return jobApplications
     }catch(error){
         throw Error(error.message)
     }
 }
 
-    jobApplicationSchema.statics.getAllApplicationsForJob = async function(jobListingAppliedForID){
-        if(!mongoose.Types.ObjectId.isValid(jobListingAppliedForID)){
-            throw Error("Account does not exist")
-        }
-        try{
-            const jobApplications = await this.find({jobListingAppliedForID})
-            if (!jobApplications){
-                jobApplications = {}
-            }
-            return jobApplications
-        } catch (error){
-            throw Error(error.message)
-        }
-        
+jobApplicationSchema.statics.getAllApplicationsForJob = async function(jobListingAppliedForID){
+    if(!mongoose.Types.ObjectId.isValid(jobListingAppliedForID)){
+        throw Error("Account does not exist")
     }
+    try{
+        const jobApplications = await this.find({jobListingAppliedForID})
+        if (!jobApplications){
+            jobApplications = {}
+        }
+        return jobApplications
+    } catch (error){
+        throw Error(error.message)
+    }
+    
+}
 
 //jobApplicationSchema.statics.getAll
 

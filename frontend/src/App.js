@@ -12,8 +12,8 @@ import Signup from './pages/Signup'
 import { useAuthContext } from './hooks/useAuthContext';
 import Footer from './components/Footer'
 import ProfilePage from './pages/ProfilePage'
-import AcceptRejectAppForm from './pages/AcceptRejectAppForm';
 import PendingApplicants from './pages/PendingApplicants';
+import AppliedApplications from './pages/AppliedApplications';
  
 
 function App() { 
@@ -34,6 +34,7 @@ function App() {
             <Route path='/ChatWindow' element={user ? <ChatWindow/>: <Navigate to="/login" />} />
             <Route path='/profilePage/:_id' element={user ? <ProfilePage/> : <Navigate to="/login" />} />
             <Route path='/PendingApplications' element={user ? <PendingApplicants /> : <Navigate to="/login" />} />
+            <Route path='/appliedApplications' element={user ? <AppliedApplications/> : <Navigate to="/login" />} />
           </Routes> 
         </div> 
         <Footer/>

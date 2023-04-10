@@ -89,7 +89,7 @@ const JobApplicationForm = () => {
   
     return (   
         //let applicant choose start and end date for working duration  
-        <div>  
+        <div className="job-application-form">  
             <h3 className="section">Job Application Form: Please input the necessary details as required below.</h3>  
             <br></br> 
             <h3 className="section">Intended Working Period:</h3>  

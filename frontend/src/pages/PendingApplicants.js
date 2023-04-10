@@ -1,4 +1,3 @@
-import useFetch from '../hooks/useFetch'
 import { useAuthContext } from '../hooks/useAuthContext';
 import ListPendingApplicants from '../components/ListPendingApplicants';
 import { useState, useEffect } from 'react'
@@ -40,7 +39,7 @@ useEffect(() => {
             { error && <div>{ error }</div>}
             { isLoading && <div>Loading...</div> }
 
-            { pendingApplications && <ListPendingApplicants pendingApplicants = {pendingApplications} title = "Pending Applications" />}
+            { pendingApplications && <ListPendingApplicants pendingApplicants = {pendingApplications} title = "Pending Applicants" />}
         </div>
     );
 }

@@ -7,10 +7,13 @@ const {CreateJobApplicationController} = require('../controllers/CreateJobApplic
 const {updateJobApplicationController} = require('../controllers/updateJobApplicationController')
 const {getAllJobApplicationsController} = require('../controllers/getAllJobApplicationsController')
 
+const {getApplicationsByUserController} = require('../controllers/getApplicationsByUserController')
 
 const createJobApplicationControl = new CreateJobApplicationController()
 const updateJobApplicationControl = new updateJobApplicationController()
 const getAllJobApplicationsControl = new getAllJobApplicationsController()
+
+const getApplicationsByUserControl = new getApplicationsByUserController()
 
 //protected routes
 //all routes below this require session cookie (login) to access
@@ -27,5 +30,7 @@ router.post('/updateJobApplication/:id', updateJobApplicationControl.handleJobAp
 
 //get all the JobApplications
 router.get('/getAllJobApplications', getAllJobApplicationsControl.handleGetAllJobApplications)
+
+router.post('/getAllJobApplicationsForApplicant', getApplicationsByUserControl.handleGetAllJobApplications)
 
 module.exports = router

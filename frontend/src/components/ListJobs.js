@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
-import { format } from "date-fns"
+import { format, utcToZonedTime } from 'date-fns-tz'
 
 const ListJobs = ({ jobListings, title }) => {
+    const timeZone = 'Singapore'
     return ( 
         <div className="list-jobs">
             <h2 className="all-jobs-title">{ title }</h2>
@@ -14,9 +15,9 @@ const ListJobs = ({ jobListings, title }) => {
                         <label>Total Pay: </label>
                         <p>${ jl.totalPay }</p>
                         <label>Start Date & Time:</label>
-                        <p>{format(new Date(jl.startDateTime), 'dd/MM/yyyy hh:mm')}</p>
+                        <p>{format(utcToZonedTime(new Date(jl.startDateTime), 'Singapore'), 'dd/MM/yyyy HH:mm', {timeZone: 'Singapore'})}</p>
                         <label>End Date & Time:</label>
-                        <p>{format(new Date(jl.endDateTime), 'dd/MM/yyyy hh:mm')}</p>
+                        <p>{format(utcToZonedTime(new Date(jl.endDateTime), 'Singapore'), 'dd/MM/yyyy HH:mm', {timeZone: 'Singapore'})}</p>
                         <Link to={`/joblistingdetails/${jl._id}`} className="job-listing-links">
                             <button>Find out more!</button>
                         </Link>

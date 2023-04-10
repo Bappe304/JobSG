@@ -24,7 +24,8 @@ const NavBar = () => {
                 <div className="logged-in-links"> 
                     <Link to={`/profilePage/${user.accountID}`}>
                         <p className="profile-page-link">Welcome, {user.emailAddress}</p>
-                    </Link> 
+                    </Link>
+                    <Link to="/appliedApplications">Applied Applications</Link>  
                     <Link to="/PendingApplications">Pending Applicants</Link> 
                     <Link to="/create">Create Job</Link> 
                     <button onClick={handleClick} className="logout-button">Logout</button> 
