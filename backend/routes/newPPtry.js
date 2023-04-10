@@ -28,7 +28,7 @@ mongoose.connection.on("connected", () => {
   var client = mongoose.connections[0].client 
   var db = mongoose.connections[0].db 
   bucket = new mongoose.mongo.GridFSBucket(db, {
-    bucketName: "newBucket"
+    bucketName: "Profilepicture"
   }) 
 
 }) 
@@ -42,10 +42,11 @@ const Storage = new GridFsStorage({
   url: mongouri,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
-      const filename = file.originalname 
+      
+      const filename = `${req.query.email}`
       const fileInfo = {
         filename: filename,
-        bucketName: "newBucket"
+        bucketName: "Profilepicture"
       } 
       resolve(fileInfo) 
     }) 
@@ -58,9 +59,7 @@ const upload = multer({
 
 
 
-console.log("hi")
 router.get("/Profilepicinfo/:filename", (req, res) => {
-    console.log('macs')
     console.log(req.params.filename)
     const file = bucket
       .find({

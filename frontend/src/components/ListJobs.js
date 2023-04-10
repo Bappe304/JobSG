@@ -7,7 +7,7 @@ const ListJobs = ({ jobListings, title }) => {
             <h2 className="all-jobs-title">{ title }</h2>
             {jobListings.map((jl) => (
                 <div className="job-listing-preview" key = { jl._id }> 
-                        <img className = "job-image" src={`${jl.imageLink}`}></img>
+                        
                         <p className="jobTitle">Job Title: { jl.jobTitle }</p>
                         <label>Job Description:</label>
                         <p>{ jl.jobDescription }</p>

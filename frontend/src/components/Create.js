@@ -12,20 +12,78 @@ const Create = () => {
     const [endDateTime, setEndDateTime] = useState(new Date());  
     const [postalCode, setPostalCode] = useState('');  
     const [reqNumberOfWorkers, setReqNumberOfWorkers] = useState();    
-    const [isPending, setIsPending] = useState(false); 
+    const [isLoading, setIsLoading] = useState(false); 
     const [error, setError] = useState(null)
     const [category, setCategory] = useState('others')
+    const [jobListingPic, setJobListingPic] = useState(null) 
+    const [jobID, setJobID] = useState(null) 
     const navigate = useNavigate();
     const { user } = useAuthContext();
     const onOptionChangeHandler = (event) => {  
         setCategory(event.target.value)  
     }
+
+      
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('jobID', jobID);
+        setJobListingPic(formData);
+      };
  
-    const handleSubmit = (e) => { 
+    const handleSubmit = async (e) => { 
         e.preventDefault(); 
         let isError = false
         const job = { jobTitle, jobDescription, totalPay, startDateTime, endDateTime, postalCode, reqNumberOfWorkers,category, creatorId: user.accountID}; 
-        setIsPending(true); 
+        setIsLoading(true); 
+        try{
+            const response = await fetch('http://localhost:4000/api/jobListings/createJobListing', { 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json',"Authorization": `Bearer ${user.token}`}, 
+            body: JSON.stringify(job) 
+        }) 
+
+        const json = await response.json()
+        if (!response.ok) { 
+            setIsLoading(false) 
+            throw Error(json.error)
+        } 
+        
+        if (response.ok) { 
+            // Save user to localStorage 
+            localStorage.setItem('user', JSON.stringify(json)) 
+
+            
+            setIsLoading(false) 
+        } 
+
+             
+            if (json["error"])
+            {
+                setIsLoading(false); 
+                throw Error(json["error"])
+            }
+            setJobID(json["_id"])
+            const response2 = await fetch(`http://localhost:4000/api/uploadJobListingPics/uploadJobListingPics?jobID=${encodeURIComponent(json["_id"])}`, {
+                method: 'POST',
+                body: jobListingPic
+            })
+            const json2 = await response2
+            
+            if (!response2.ok) {
+                setIsLoading(false)
+                throw Error(json2.error)
+            }
+            if (response2.ok) {
+                setIsLoading(false)
+                navigate(`/joblistingdetails/${json._id}`); 
+            }
+        } catch(error){
+            console.log(error)
+            setError(error.message)
+        }
+        /*
         fetch('http://localhost:4000/api/jobListings/createJobListing',{ 
             method: 'POST', 
             headers: {"Content-Type": "application/json"
@@ -38,7 +96,7 @@ const Create = () => {
         }
             ) 
         .then(data => {
-            console.log(data);
+            console.logd(ata);
             if(data["error"]) {
                 setIsPending(false); 
                 throw Error(data["error"])
@@ -51,6 +109,8 @@ const Create = () => {
             setError(error.message)
 
         })
+        */
+       
     } 
  
     return (   
@@ -130,12 +190,17 @@ const Create = () => {
                 <br></br> 
                 <button className ="UploadJob"> 
                   Upload Job Image 
-                  <input accept="image/*" type="file" id="img" name="img" required/> 
+                  <input
+                    type = "file"  
+                    accept = "image/*"
+                    name = "file"
+                    onChange = {handleFileInputChange}
+                />
                 </button> 
                 <br></br> 
                 <br></br> 
-                { !isPending && <button className="AddJob">Add Job</button> } 
-                { isPending && <button className="AddJob" disabled>Add Job Listing...</button> } 
+                { !isLoading && <button className="AddJob">Add Job</button> } 
+                { isLoading && <button className="AddJob" disabled>Add Job Listing...</button> } 
             </form> 
             {error && <h2>{error}</h2>}
         </div> 

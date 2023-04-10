@@ -11,11 +11,12 @@ const Signup = () => {
     const [password, setPassword] = useState(''); 
     const [age, setAge] = useState(0); 
     const [gender, setGender] = useState('Male');
-    // const [profilePic, setProfilePic] = useState(new Image()) 
+    const [profilePic, setProfilePic] = useState(null) 
     const {signup, error, isLoading} = useSignup() 
  
     const genderOptions = [ 'Male', 'Female' ]; 
-    const onOptionChangeHandler = (event) => { 
+
+    const onOptionChangeHandler = (event) => {  
         if (event.target.value == null) { 
             setGender("Male") 
         } else { 
@@ -23,11 +24,19 @@ const Signup = () => {
             setGender(event.target.value) 
         } 
     } 
+
+    const handleFileInputChange = (event) => {
+        const file = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('emailAddress', emailAddress);
+        setProfilePic(formData);
+      };
  
     const handleSubmit = async (e) => { 
         e.preventDefault() 
  
-        await signup(emailAddress, firstName, lastName, phoneNumber, password, age, gender) 
+        await signup(emailAddress, firstName, lastName, phoneNumber, password, age, gender, profilePic) 
     } 
  
     return (  
@@ -58,7 +67,7 @@ const Signup = () => {
                     value = { phoneNumber } 
                     width = {8} 
                     placeholder = "91234567" 
-                    pattern = "[6,8,9]{1}[0-9]{7}" 
+                    //pattern = "[6,8,9]{1}[0-9]{7}" 
                     onChange = {(e) => setPhoneNumber(e.target.value)} 
                 /> 
  
@@ -96,7 +105,13 @@ const Signup = () => {
                         </option> 
                     })} 
                 </select> 
- 
+                <label>Profile Picture:</label>
+                <input
+                    type = "file"  
+                    accept = "image/*"
+                    name = "file"
+                    onChange = {handleFileInputChange}
+                />
                 <br></br> 
                 <br></br> 
                 <button className="signup-button" disabled={isLoading}>Sign Up Now!</button> 

@@ -18,7 +18,7 @@ const JobListingDetails = () => {
                 
                 <article> 
                     <h2 className="job-listing-title">{ jobListing.jobTitle }</h2> 
-                    <img src={`${jobListing.imageLink}`} className="job-listing-image"></img> 
+                    <img src={`http://localhost:4000/api/uploadJobListingPics/jobListingPics/${jobListing._id}`} className="job-listing-image"></img> 
                     <br></br>
                     <label>Job Description:</label>
                     <p>{ jobListing.jobDescription }</p> 

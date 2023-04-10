@@ -7,6 +7,7 @@ const applicationRoutes = require('./routes/jobApplications')
 const mongoose = require('mongoose')
 const NewTryRoutes = require('./routes/Pdfupload')
 const newPPtry = require('./routes/newPPtry')
+const jobListingPicsRoutes = require('./routes/jobListingPics')
 
 //setting up express app
 const app = express()
@@ -23,7 +24,8 @@ app.use('/api/jobListings', jobListingsRoutes)
 app.use('/api/chat', chatsRoutes)
 app.use('/api/application', applicationRoutes)
 app.use('/api/uploadPP', newPPtry)
-app.use('/api/PDF', NewTryRoutes)
+app.use('/api/uploadJobListingPics',jobListingPicsRoutes)
+//app.use('/api/PDF', NewTryRoutes)
 //connecting to db
 mongoose.connect(process.env.MONGO_URI).then(()=>{
     app.listen(process.env.PORT,()=>{
