@@ -405,7 +405,16 @@ input.error {
   border: 1px solid #ddd; 
   border-radius: 6px;  
   box-sizing: border-box;  
-} 
+}
+
+.signup-form select {
+  width: 100%;  
+  padding: 6px 10px;  
+  margin: 10px 0;  
+  border: 1px solid #ddd;  
+  box-sizing:
+  border-box;  
+}
  
 .signup-form button.signup-button { 
   background: #f1356d;  
