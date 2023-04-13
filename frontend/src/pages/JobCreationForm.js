@@ -52,7 +52,7 @@ const Create = () => {
         
         if (response.ok) { 
             // Save user to localStorage 
-            localStorage.setItem('user', JSON.stringify(json)) 
+            //localStorage.setItem('user', JSON.stringify(json)) 
 
             
             setIsLoading(false) 

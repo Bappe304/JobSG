@@ -80,12 +80,12 @@ jobListingSchema.statics.createJob = async function(req){
     if(!lng) emptyFields.push('lng')
     if(!category) emptyFields.push('category')
     if(emptyFields.length > 0){
-        throw Error("Please fill in all fields test" + emptyFields)
+        throw Error("Please fill in all fields" + emptyFields)
     }
     if(jobTitle.length < 2 || jobTitle.length > 50){
         throw Error("Job Title length should be between 2 and 50 characters")
     }
-    if(jobDescription.length < 20 || jobTitle.length > 300){
+    if(jobDescription.length < 20 || jobDescription.length > 300){
         throw Error("Job Description length should be between 20 and 300 characters")
     }
     let startDate = new Date(startDateTime)
@@ -126,7 +126,6 @@ jobListingSchema.statics.getAllJobListings = async function (req){
 }
 
 jobListingSchema.statics.getAllJobListingsByCreatorID = async function(creatorId){
-    console.log(creatorId)
     if(!mongoose.Types.ObjectId.isValid(creatorId)){
         throw Error("Job listing does not exist")
     }
@@ -134,7 +133,6 @@ jobListingSchema.statics.getAllJobListingsByCreatorID = async function(creatorId
     if (!allJobListings){
         throw Error("User has not created any job listings!")
     }
-    console.log(allJobListings)
     return allJobListings;
 }
 

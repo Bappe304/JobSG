@@ -13,17 +13,11 @@ class getAccountController extends AccountObserver{
         this.handleGetAccount = this.handleGetAccount.bind(this)
     }
     async update(req){
-        console.log('hi1')
         let account = await Account.getAccount(req)
-        console.log('hi2')
         let updatedAccount = JSON.parse(JSON.stringify(account))
-        console.log('hi4')
-        let link = await jobApplicationModel.getAllJobsAppliedFor(req)
-        console.log('hi6')        
+        let link = await jobApplicationModel.getAllJobsAppliedFor(req)    
         let jobsAppliedFor =  JSON.parse(JSON.stringify(await jobApplicationModel.getAllJobsAppliedFor(req)))
-        console.log('hi5')
         updatedAccount["jobsAppliedFor"] = jobsAppliedFor
-        console.log('hi3')
         return updatedAccount
     }
     async handleGetAccount (req,res){

@@ -37,7 +37,6 @@ jobApplicationSchema.statics.createJobApplication = async function(req){
     const {jobListingAppliedForID, startDateTime, endDateTime} = req.body
     const applicantID = req.account._id
     let emptyFields = []
-    console.log(jobListingAppliedForID)
     if(!jobListingAppliedForID) emptyFields.push('jobListingAppliedForID')
     if(!startDateTime) emptyFields.push('startDateTime')
     if(!endDateTime) emptyFields.push('endDateTime')
@@ -47,7 +46,6 @@ jobApplicationSchema.statics.createJobApplication = async function(req){
     }
     try{
         const existingApplication = await this.find({applicantID})
-        console.log(applicantID)
         const jobApplication = await this.create({applicantID, jobListingAppliedForID, startDateTime, endDateTime, applicationStatus:"Pending"})
         return jobApplication
     }catch (error){
@@ -112,7 +110,6 @@ jobApplicationSchema.statics.updatejobDetails = async function(req){
     const { startDate, endDate} = req.body
     const jobApplicationID = req.params.id
     const applicantID = req.account._id
-    console.log(jobApplicationID,applicantID,startDate, endDate)
     if(!mongoose.Types.ObjectId.isValid(applicantID)){
         throw Error("Account does not exist")
     }
@@ -128,7 +125,6 @@ jobApplicationSchema.statics.updatejobDetails = async function(req){
         jobApplication.startDate = startDate
         jobApplication.endDate = endDate
         const updatedJob = await jobApplication.save()
-        console.log(updatedJob)
         res.status(200).json(updatedJob)
 
     }catch(error){

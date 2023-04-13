@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import {Link} from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useState, useEffect } from "react";
-import ListProfilePage from "../components/ListProfilePage";
 
  
 const ProfilePage = () => { 
@@ -13,9 +12,14 @@ const ProfilePage = () => {
     const [error, setError] = useState(null);
     const [profile, setProfile] = useState(null);
     const [jobs, setJobs] = useState(null);
+    const [authorised, setAuthorised] = useState(false)
     // const { data: profile, error, isLoading } = useFetch('http://localhost:4000/api/accounts/' + _id); 
+    
 
     useEffect(() => {
+        if (_id === user.accountID){
+            setAuthorised(true)
+        } 
         fetch('http://localhost:4000/api/accounts/' + _id,{ 
                 method: 'POST',
                 headers: {"Content-Type": "application/json",
@@ -35,6 +39,8 @@ const ProfilePage = () => {
                 // setJobs(profile.jobsAppliedFor)
                 // console.log(data.getJSONArray('jobsAppliedFor'));
                 // console.log(jobs)
+
+
             })   
             .catch((error)=>{
                 console.log(error)
@@ -65,7 +71,10 @@ const ProfilePage = () => {
                     <p>{ profile.gender }</p>
                     {/* {profile && <ListProfilePage applications = {profile.jobsAppliedFor} />} */}
                     <br></br> 
-                    <br></br> 
+                    <br></br>
+                    { authorised && <Link to={`/editProfile/${user.accountID}`}>
+                        <button>Edit Profile</button>    
+                    </Link> } 
                 </article> 
             )} 
         </div> 

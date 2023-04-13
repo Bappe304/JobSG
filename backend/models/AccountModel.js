@@ -60,7 +60,7 @@ accountSchema.statics.signUp = async function(req){
         if (firstName.length < 2 || firstName.length > 80){
             throw Error("First Name must be between 2 and 80 characters!")
         }
-        if (lastName.length < 2 || firstName.length > 80){
+        if (lastName.length < 2 || lastName.length > 80){
             throw Error("Last Name must be between 2 and 80 characters!")
         }
 
@@ -146,4 +146,49 @@ accountSchema.statics.getAccount = async function(req){
     }
     return account
 }
+
+accountSchema.statics.editAccount = async function(req){
+    const accountID = req.account._id
+    const {firstName,lastName,phoneNumber} = req.body
+    let emptyFields = []
+    if(!firstName) emptyFields.push('firstName')
+    if(!lastName) emptyFields.push('lastName')
+    if(!phoneNumber) emptyFields.push('phoneNumber')
+    if(emptyFields.length > 0){
+        throw Error("Please fill in all fields " + emptyFields)
+    }
+    if (firstName.length < 2 || firstName.length > 80){
+        throw Error("First Name must be between 2 and 80 characters!")
+    }
+    if (lastName.length < 2 || lastName.length > 80){
+        throw Error("Last Name must be between 2 and 80 characters!")
+    }
+
+
+    if (/[^a-zA-Z]/.test(firstName)){
+        throw Error("First Name can only contain alphabets!")
+    }
+
+    if (/[^a-zA-Z]/.test(lastName)){
+        throw Error("Last Name can only contain alphabets!")
+    }
+    
+    if(phoneNumber.match(/^[0-9]+$/) == null){
+        throw Error("Phone number can only contain digits")
+    }
+    if (phoneNumber.length != 8){
+        throw Error("Phone number should have 8 digits")
+    }
+    try{
+        let updatedAccount = await this.findByIdAndUpdate(accountID, {$set:{firstName:firstName, lastName:lastName, phoneNumber: phoneNumber}}, {new:true})
+        return updatedAccount;
+    }
+    catch (error){
+        throw error;
+    }
+    
+
+
+}
+
 module.exports = mongoose.model('Account', accountSchema)

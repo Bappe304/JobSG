@@ -5,7 +5,7 @@ const JobListing = require('../models/JobListingModel')
 const Account = require('../models/AccountModel')
 
 
-class getAllJobApplicationsController extends JobApplicationObserver{
+class getPendingApplicantsController extends JobApplicationObserver{
     constructor(){
         super()
         this.update = this.update.bind(this)
@@ -39,4 +39,4 @@ class getAllJobApplicationsController extends JobApplicationObserver{
     }
 }
 
-module.exports = {getAllJobApplicationsController}
+module.exports = {getPendingApplicantsController}

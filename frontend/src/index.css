@@ -467,6 +467,28 @@ input.error {
   margin-bottom: 10px; 
   display: block; 
   width: auto; 
+}
+.profile-details a {
+  text-decoration: none;
+}
+.profile-details button {
+  background: #f1356d;  
+  color: #fff;  
+  border: 0;  
+  padding: 8px;  
+  border-radius: 8px;  
+  cursor: pointer;
+  text-align: center; 
+  position: relative;
+  margin: auto; 
+  display: block;
+}
+.profile-details button:hover {
+  border-style: solid; 
+  border: 0; 
+  background: white;
+  color: black; 
+  cursor: pointer;
 } 
 
 

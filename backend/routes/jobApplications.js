@@ -3,15 +3,13 @@ const requireAuth = require('../middleware/sessionController')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 
-const {CreateJobApplicationController} = require('../controllers/CreateJobApplicationController')
-const {updateJobApplicationController} = require('../controllers/updateJobApplicationController')
-const {getAllJobApplicationsController} = require('../controllers/getAllJobApplicationsController')
+const {CreateJobApplicationController} = require('../controllers/createJobApplicationController')
+const {getPendingApplicantsController} = require('../controllers/getPendingApplicantsController')
 
 const {getApplicationsByUserController} = require('../controllers/getApplicationsByUserController')
 
 const createJobApplicationControl = new CreateJobApplicationController()
-const updateJobApplicationControl = new updateJobApplicationController()
-const getAllJobApplicationsControl = new getAllJobApplicationsController()
+const getPendingApplicantsControl = new getPendingApplicantsController()
 
 const getApplicationsByUserControl = new getApplicationsByUserController()
 
@@ -24,12 +22,9 @@ router.use(requireAuth)
 //require session cookie and account id
 router.post('/createJobApplication', createJobApplicationControl.handleJobApplication)
 
-//update a job application
-//require session cookie, account id and job application id
-router.post('/updateJobApplication/:id', updateJobApplicationControl.handleJobApplicationUpdate)
 
 //get all the JobApplications
-router.get('/getAllJobApplications', getAllJobApplicationsControl.handleGetAllJobApplications)
+router.get('/getAllJobApplications', getPendingApplicantsControl.handleGetAllJobApplications)
 
 router.post('/getAllJobApplicationsForApplicant', getApplicationsByUserControl.handleGetAllJobApplications)
 

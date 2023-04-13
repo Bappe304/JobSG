@@ -60,7 +60,6 @@ const upload = multer({
 
 
 router.get("/Profilepicinfo/:filename", (req, res) => {
-    console.log(req.params.filename)
     const file = bucket
       .find({
         filename: req.params.filename

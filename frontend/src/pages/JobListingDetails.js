@@ -6,7 +6,6 @@ import { format, utcToZonedTime } from 'date-fns-tz';
 const JobListingDetails = () => { 
     // To use the customisable route parameters
     const { _id } = useParams(); 
-    console.log(_id)
     const { data: jobListing, error, isLoading } = useFetch('http://localhost:4000/api/jobListings/getJobInformation/' + _id); 
     
     return (  
@@ -29,7 +28,7 @@ const JobListingDetails = () => {
                     <label>End Date & Time:</label>
                     <p>{format(utcToZonedTime(new Date(jobListing.endDateTime), 'Singapore'), 'dd/MM/yyyy HH:mm', {timeZone: 'Singapore'})}</p> 
                     <label>Job location: </label>
-                    <p>{ jobListing.postalCode }</p> 
+                    <p>{ jobListing.address }</p> 
                     <label>Number of Workers needed:</label>
                     <p>{ jobListing.reqNumberOfWorkers }</p> 
                     <label>Job posted by: </label>
